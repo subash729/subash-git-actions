@@ -2,54 +2,36 @@ name: Docker Image CI
 
 on:
   push:
-    branches: 
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches: 
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build the Docker image
-        run: |
-          sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev .
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
 
   push:
     runs-on: self-hosted
     needs: build
     steps:
-      - name: Login to Dockerhub
-        env:
-          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-        run: |
-          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
-      - name: Pushing to Dockerhub
-        run: |
-          sudo docker push subash729/backend-github-action:stable
-          sudo docker push subash729/backend-github-action:dev
-
-  version-increase:
-    runs-on: ubuntu-latest
-    needs: build
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x, 20.x]
+    - name: Login Dockerhub
+      env:
+        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}} 
+      run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - name: Pushing to Dockerhub
+      run: |
+        sudo docker push subash729/backend-github-action:stable
+        sudo docker push subash729/backend-github-action:dev      
+  increase-version:
+    runs-on: node14
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Increase version in package.json
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-        run: |
-          yarn version --patch
-          git push --follow-tags
+    - uses: actions/checkout@v3
+    - name: Increase version in package.json
+      run: |
+        yarn version --patch
+        git push --follow-tags
