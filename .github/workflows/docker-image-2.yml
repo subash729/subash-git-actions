@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
+      run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
 
   push:
     runs-on: self-hosted
