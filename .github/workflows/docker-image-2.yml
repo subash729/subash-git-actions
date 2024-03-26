@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
+      run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:$(git rev-parse HEAD)  .
 
   push:
     runs-on: self-hosted
@@ -26,7 +26,7 @@ jobs:
     - name: Pushing to Dockerhub
       run: |
         sudo docker push subash729/backend-github-action:stable
-        sudo docker push subash729/backend-github-action:dev      
+        sudo docker push subash729/backend-github-action:$(git rev-parse HEAD)      
   increase-version:
     runs-on: ubuntu-latest
     steps:
