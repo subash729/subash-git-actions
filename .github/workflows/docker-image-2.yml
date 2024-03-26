@@ -28,10 +28,28 @@ jobs:
         sudo docker push subash729/backend-github-action:stable
         sudo docker push subash729/backend-github-action:dev      
   increase-version:
-    runs-on: node14
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
     steps:
     - uses: actions/checkout@v3
     - name: Increase version in package.json
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
       run: |
         yarn version --patch
         git push --follow-tags
+
+
+
+        # increase-version:
+        #   runs-on: node14
+        #   steps:
+        #   - uses: actions/checkout@v3
+        #   - name: Increase version in package.json
+        #     run: |
+        #       yarn version --patch
+        #       git push --follow-tags
