@@ -1,3 +1,44 @@
+# name: Docker Image CI
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   build:
+#     runs-on: self-hosted
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Build the Docker image
+#       run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
+
+#   push:
+#     runs-on: self-hosted
+#     needs: build
+#     steps:
+#     - name: Login Dockerhub
+#       env:
+#         DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+#         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}} 
+#       run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+#     - name: Pushing to Dockerhub
+#       run: |
+#         sudo docker push subash729/backend-github-action:stable
+#         sudo docker push subash729/backend-github-action:dev
+
+#   increase-version:
+#     runs-on: self-hosted
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Increase version in package.json
+#       run: |
+#         yarn version --patch
+#         git push --follow-tags
+
+
+
 name: Docker Image CI
 
 on:
@@ -11,6 +52,11 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
+    - name: Setup Node.js and Yarn
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
     - name: Build the Docker image
       run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
 
@@ -32,6 +78,11 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
+    - name: Setup Node.js and Yarn
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
     - name: Increase version in package.json
       run: |
         yarn version --patch
