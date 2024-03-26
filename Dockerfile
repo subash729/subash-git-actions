@@ -4,6 +4,8 @@ FROM node:20-alpine
 
 # Set the working directory
 WORKDIR /backend
+RUN apk --no-cache add yarn
+
 
 # Copy package.json and package-lock.json
 COPY package*.json /backend/
