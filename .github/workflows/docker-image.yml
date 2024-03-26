@@ -12,12 +12,11 @@ jobs:
     - name: Login Dockerhub
       env:
         DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-        REPOSITORY: backend-github-action 
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}} 
       run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: sudo docker build -t $DOCKER_USERNAME/$REPOSITORY:stable -t $DOCKER_USERNAME/$REPOSITORY:dev  .
+      run: sudo docker build -t $DOCKER_USERNAME/backend-github-action:stable -t $DOCKER_USERNAME/backend-github-action:dev  .
     - name: Pushing to Dockerhub
       run: |
-        sudo docker push $DOCKER_USERNAME/$REPOSITORY:stable
-        sudo docker push $DOCKER_USERNAME/$REPOSITORY:dev
+        sudo docker push $DOCKER_USERNAME/backend-github-action:stable
+        sudo docker push $DOCKER_USERNAME/backend-github-action:dev
