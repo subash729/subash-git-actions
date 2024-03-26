@@ -29,11 +29,11 @@ jobs:
         sudo docker push subash729/backend-github-action:dev      
 
 
-increase-version:
-  runs-on: ubuntu-latest
-  steps:
-  uses: actions/checkout@v3
-  - name: Increase version in package.json
-  run: |
-    yarn version --patch
-    git push --follow-tags
+# increase-version:
+#   runs-on: ubuntu-latest
+#   steps:
+#   uses: actions/checkout@v3
+#   - name: Increase version in package.json
+#   run: |
+#     yarn version --patch
+#     git push --follow-tags
