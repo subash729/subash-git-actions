@@ -15,10 +15,8 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}} 
       run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: sudo docker build -t subash729/backend-github-action:stable -t $DOCKER_USERNAME/backend-github-action:dev  .
+      run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:dev  .
     - name: Pushing to Dockerhub
       run: |
         sudo docker push subash729/backend-github-action:stable
         sudo docker push subash729/backend-github-action:dev
-
-      
