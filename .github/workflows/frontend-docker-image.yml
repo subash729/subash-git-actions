@@ -39,5 +39,5 @@ jobs:
     - name: Increase version in package.json
       run: |
         yarn version --patch
-#        git push --follow-tag
+        git push --follow-tag
 
