@@ -26,9 +26,9 @@ jobs:
     - name: Pushing to Dockerhub
       run: |
         sudo docker push subash729/backend-github-action:stable
-        sudo docker push subash729/backend-github-action:dev      
+        sudo docker push subash729/backend-github-action:dev
   increase-version:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
     - name: Increase version in package.json
