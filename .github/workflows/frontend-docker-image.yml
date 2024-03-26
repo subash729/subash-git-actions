@@ -1,10 +1,10 @@
-name:  Backend Docker Image CI
+name: Frontend Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: sudo docker build -t subash729/backend-github-action:stable -t subash729/backend-github-action:$(git rev-parse HEAD)  .
+      run: sudo docker build -t subash729/frontend-github-action:dev -t subash729/frontend-github-action:$(git rev-parse HEAD)  .
 
   push:
     runs-on: self-hosted
@@ -25,8 +25,8 @@ jobs:
       run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Pushing to Dockerhub
       run: |
-        sudo docker push subash729/backend-github-action:stable
-        sudo docker push subash729/backend-github-action:$(git rev-parse HEAD)      
+        sudo docker push subash729/frontend-github-action:dev
+        sudo docker push subash729/frontend-github-action:$(git rev-parse HEAD)      
   increase-version:
     runs-on: ubuntu-latest
     steps:
@@ -40,5 +40,4 @@ jobs:
       run: |
         yarn version --patch
 #        git push --follow-tag
-
 
