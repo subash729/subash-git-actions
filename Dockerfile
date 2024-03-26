@@ -6,15 +6,15 @@ FROM node:20-alpine
 WORKDIR /backend
 
 # Copy package.json and package-lock.json
-COPY ./backend/package*.json /backend/
-COPY ./backend/yarn.lock /backend/
+COPY package*.json /backend/
+COPY yarn.lock /backend/
 
 
 # Install dependencies
 RUN yarn install
 
 # Copy the rest of the application
-COPY ./backend .
+COPY . .
 
 # Expose the backend port
 EXPOSE 3000
