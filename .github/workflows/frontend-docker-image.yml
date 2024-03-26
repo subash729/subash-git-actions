@@ -28,7 +28,7 @@ jobs:
         sudo docker push subash729/frontend-github-action:dev
         sudo docker push subash729/frontend-github-action:$(git rev-parse HEAD)      
   increase-version:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v3
     - name: Set Git user identity
@@ -39,5 +39,5 @@ jobs:
     - name: Increase version in package.json
       run: |
         yarn version --patch
-        git push --follow-tag
+#        git push --follow-tag
 
