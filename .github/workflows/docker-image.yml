@@ -14,11 +14,10 @@ jobs:
         DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         REPOSITORY: backend-github-action 
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      run: sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build -t $DOCKER_USERNAME/$REPOSITORY:stable -t $DOCKER_USERNAME/$REPOSITORY:dev  .
+      run: sudo docker build -t $DOCKER_USERNAME/$REPOSITORY:stable -t $DOCKER_USERNAME/$REPOSITORY:dev  .
     - name: Pushing to Dockerhub
       run: |
-        docker push $DOCKER_USERNAME/$REPOSITORY:stable
-        docker push $DOCKER_USERNAME/$REPOSITORY:dev
-
+        sudo docker push $DOCKER_USERNAME/$REPOSITORY:stable
+        sudo docker push $DOCKER_USERNAME/$REPOSITORY:dev
